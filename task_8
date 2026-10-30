@@ -1,0 +1,69 @@
+
+import java.util.*;
+
+public class SmartTrafficNavigation {
+    public static void main(String[] args) {
+
+        HashMap<String, List<String>> graph = new HashMap<>();
+
+        graph.put("A", Arrays.asList("B", "C"));
+        graph.put("B", Arrays.asList("A", "D"));
+        graph.put("C", Arrays.asList("A", "D"));
+        graph.put("D", Arrays.asList("B", "C", "E"));
+        graph.put("E", Arrays.asList("D"));
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter Source: ");
+        String source = sc.next().toUpperCase();
+
+        System.out.print("Enter Destination: ");
+        String destination = sc.next().toUpperCase();
+
+        Queue<String> queue = new LinkedList<>();
+        HashSet<String> visited = new HashSet<>();
+        HashMap<String, String> parent = new HashMap<>();
+
+        if (!graph.containsKey(source) ||
+            !graph.containsKey(destination)) {
+            System.out.println("Invalid Location");
+            sc.close();
+            return;
+        }
+
+        queue.add(source);
+        visited.add(source);
+
+        while (!queue.isEmpty()) {
+            String current = queue.poll();
+
+            if (current.equals(destination))
+                break;
+
+            for (String next : graph.get(current)) {
+                if (!visited.contains(next)) {
+                    visited.add(next);
+                    parent.put(next, current);
+                    queue.add(next);
+                }
+            }
+        }
+
+        if (!visited.contains(destination)) {
+            System.out.println("No Route Found");
+        } else {
+            ArrayList<String> path = new ArrayList<>();
+            String current = destination;
+
+            while (current != null) {
+                path.add(current);
+                current = parent.get(current);
+            }
+
+            Collections.reverse(path);
+            System.out.println("Shortest Route: " + path);
+        }
+
+        sc.close();
+    }
+}
