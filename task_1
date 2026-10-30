@@ -1,0 +1,59 @@
+
+import java.util.*;
+import java.util.function.*;
+import java.util.stream.Collectors;
+
+class Employee {
+    int id;
+    String name;
+    double salary;
+
+    Employee(int id, String name, double salary) {
+        this.id = id;
+        this.name = name;
+        this.salary = salary;
+    }
+}
+
+public class SalaryTransformation {
+
+    public static void main(String[] args) {
+
+        List<Employee> employees = Arrays.asList(
+            new Employee(101, "Ravi", 30000),
+            new Employee(102, "Priya", 40000),
+            new Employee(103, "Arun", 50000),
+            new Employee(104, "Sneha", 60000)
+        );
+
+       
+        Function<Double, Double> increment =
+            salary -> salary + (salary * 0.10);
+
+        
+        Predicate<Employee> filter =
+            emp -> emp.salary >= 40000;
+
+        
+        List<Employee> updatedEmployees = employees.stream()
+            .filter(filter)
+            .map(emp -> new Employee(
+                emp.id,
+                emp.name,
+                increment.apply(emp.salary)
+            ))
+            .collect(Collectors.toList());
+
+     
+        System.out.println("Salary Transformation System");
+        System.out.println("----------------------------");
+
+        updatedEmployees.forEach(emp ->
+            System.out.println(
+                "ID: " + emp.id +
+                " | Name: " + emp.name +
+                " | Updated Salary: " + emp.salary
+            )
+        );
+    }
+}
