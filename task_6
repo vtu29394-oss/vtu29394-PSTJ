@@ -1,0 +1,55 @@
+
+import java.util.Scanner;
+
+class Ride {
+    void fare(int km) {
+        System.out.println("Ride Fare");
+    }
+}
+
+class Bike extends Ride {
+    void fare(int km) {
+        System.out.println("Bike Fare: Rs." + km * 8);
+    }
+}
+
+class Car extends Ride {
+    void fare(int km) {
+        System.out.println("Car Fare: Rs." + km * 20);
+    }
+}
+
+public class RideSharingSystem {
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("1. Bike");
+        System.out.println("2. Car");
+        System.out.print("Enter choice: ");
+        int choice = sc.nextInt();
+
+        System.out.print("Enter distance: ");
+        int km = sc.nextInt();
+
+        Ride r;
+
+        if (choice == 1) {
+            r = new Bike();
+        } else if (choice == 2) {
+            r = new Car();
+        } else {
+            System.out.println("Invalid choice");
+            sc.close();
+            return;
+        }
+
+        if (km <= 0) {
+            System.out.println("Invalid distance");
+        } else {
+            r.fare(km);
+        }
+
+        sc.close();
+    }
+}
