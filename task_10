@@ -1,0 +1,30 @@
+
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+
+public class AuthenticationTest {
+
+    boolean login(String user, String pass) {
+        return user.equals("admin") && pass.equals("12345");
+    }
+
+    @Test
+    void testLogin() {
+
+        
+        assertTrue(login("admin", "12345"));
+
+        
+        assertFalse(login("admin", "wrong"));
+
+        
+        assertFalse(login("user", "12345"));
+
+        
+        for (int i = 0; i < 1000; i++) {
+            assertTrue(login("admin", "12345"));
+        }
+
+        System.out.println("1000 Login Tests Completed");
+    }
+}
