@@ -1,0 +1,57 @@
+
+import java.util.Scanner;
+
+public class MaximumProfitAnalyzer {
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter number of days: ");
+        int n = sc.nextInt();
+
+        if (n <= 0) {
+            System.out.println("Invalid number of days");
+            sc.close();
+            return;
+        }
+
+        int[] profit = new int[n];
+
+        System.out.println("Enter daily profits/losses:");
+
+        for (int i = 0; i < n; i++) {
+            profit[i] = sc.nextInt();
+        }
+
+        
+        int maxSum = profit[0];
+        int currentSum = profit[0];
+
+        int start = 0;
+        int end = 0;
+        int tempStart = 0;
+
+        for (int i = 1; i < n; i++) {
+
+            if (profit[i] > currentSum + profit[i]) {
+                currentSum = profit[i];
+                tempStart = i;
+            } else {
+                currentSum += profit[i];
+            }
+
+            if (currentSum > maxSum) {
+                maxSum = currentSum;
+                start = tempStart;
+                end = i;
+            }
+        }
+
+        System.out.println("\nMaximum Profit: " + maxSum);
+        System.out.println("Starting Day: " + (start + 1));
+        System.out.println("Ending Day: " + (end + 1));
+
+        sc.close();
+    }
+}
